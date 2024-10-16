@@ -1,73 +1,41 @@
 ---
-title: "Getting started"
-description: "Hit the ground running."
-date: "Mar 22 2024"
+title: "Feriepenger Calculator"
+description: "Calculate your Norwegian holiday pay based on annual salary and other factors."
 ---
 
-The basic configuration of Nano is pretty simple.
+<script>
+function calculateFeriepenger() {
+    const salary = parseFloat(document.getElementById('salary').value) || 0;
+    const lastYearBonus = parseFloat(document.getElementById('lastYearBonus').value) || 0;
+    const extraPayments = parseFloat(document.getElementById('extraPayments').value) || 0;
+    const isSenior = document.getElementById('isSenior').checked;
 
-Edit `src/consts.ts`
+    const percentage = 0.12;
+    const seniorPercentage = isSenior ? 0.025 : 0;
+    const totalPercentage = percentage + seniorPercentage;
 
-Customize the base site
+    const feriepenger = (salary + lastYearBonus + extraPayments) * totalPercentage;
+    document.getElementById('result').innerText = `Your feriepenger for this year is: ${feriepenger.toFixed(2)} NOK`;
+}
+</script>
 
-```ts 
-// src/consts.ts
+<h1>Feriepenger Calculator</h1>
+<p>Calculate your holiday pay based on your annual salary, bonus, and other relevant factors.</p>
 
-export const SITE: Site = {
-  NAME: "Astro Nano",
-  EMAIL: "markhorn.dev@gmail.com",
-  NUM_POSTS_ON_HOMEPAGE: 3,
-  NUM_WORKS_ON_HOMEPAGE: 2,
-  NUM_PROJECTS_ON_HOMEPAGE: 3,
-};
-```
+<div>
+    <label for="salary">Enter your annual salary in NOK:</label><br>
+    <input type="number" id="salary" name="salary"><br><br>
 
-| Field | Req | Description |
-| :---- | :-- | :-----------|
-| NAME | Yes | Displayed in header and footer. Used in SEO and RSS. |
-| EMAIL | Yes | Displayed in contact section. |
-| NUM_POSTS | Yes | Limit num of posts on home page. |
-| NUM_WORKS | Yes | Limit num of works on home page. |
-| NUM_PROJECTS | Yes | Limit num of projects on home page. |
+    <label for="lastYearBonus">Enter your last year's bonus in NOK:</label><br>
+    <input type="number" id="lastYearBonus" name="lastYearBonus"><br><br>
 
-Customize your page metadata
+    <label for="extraPayments">Enter any extra payments that count towards feriepenger in NOK:</label><br>
+    <input type="number" id="extraPayments" name="extraPayments"><br><br>
 
-```ts 
-// src/consts.ts
+    <label for="isSenior">Are you 60 years or older?</label>
+    <input type="checkbox" id="isSenior" name="isSenior"><br><br>
 
-export const HOME: Metadata = {
-  TITLE: "Home",
-  DESCRIPTION: "Astro Nano is a minimal and lightweight blog and portfolio.",
-};
-```
+    <button onclick="calculateFeriepenger()">Calculate Feriepenger</button>
 
-| Field | Req | Description |
-| :---- | :-- | :-----------|
-| TITLE | Yes | Displayed in browser tab. Used in SEO and RSS. |
-| DESCRIPTION | Yes | Used in SEO and RSS. |
-
-Customize your social media
-
-```ts 
-// src/consts.ts
-
-export const SOCIALS: Socials = [
-  { 
-    NAME: "twitter-x",
-    HREF: "https://twitter.com/markhorn_dev",
-  },
-  { 
-    NAME: "github",
-    HREF: "https://github.com/markhorn-dev"
-  },
-  { 
-    NAME: "linkedin",
-    HREF: "https://www.linkedin.com/in/markhorn-dev",
-  }
-];
-```
-
-| Field | Req | Description |
-| :---- | :-- | :-----------|
-| NAME | Yes | Displayed in contact section as a link. |
-| HREF | Yes | External url to social media profile. |
+    <p id="result"></p>
+</div>
